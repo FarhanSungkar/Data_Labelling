@@ -10,7 +10,7 @@ def save_progress(data, file_path):
     data.to_csv(file_path, index=False)
 
 # Path to the uploaded file
-file_path = 'rs moewardi.csv'
+file_path = 'rs_moewardi.csv'
 
 # Initialize state
 if 'current_index' not in st.session_state:
