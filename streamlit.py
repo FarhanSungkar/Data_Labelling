@@ -19,9 +19,6 @@ if 'labeled_data' not in st.session_state:
     st.session_state.labeled_data = load_data(file_path)
     st.session_state.labeled_data['Label'] = ''
 
-# Save progress automatically
-save_progress(st.session_state.labeled_data, 'progress.csv')
-
 # Display current progress
 st.title("Sentiment Labeling App")
 st.write(f"Progress: {st.session_state.current_index + 1}/{len(st.session_state.labeled_data)}")
@@ -52,7 +49,17 @@ if st.button('Previous'):
 # Check if finished
 if st.session_state.current_index >= len(st.session_state.labeled_data):
     st.write("Labeling finished! Saving final labeled dataset...")
-    save_progress(st.session_state.labeled_data, 'labeled_dataset.csv')
+    final_file_path = 'labeled_dataset.csv'
+    save_progress(st.session_state.labeled_data, final_file_path)
+    
+    # Provide download link
+    with open(final_file_path, 'rb') as file:
+        st.download_button(
+            label="Download Labeled Dataset",
+            data=file,
+            file_name='labeled_dataset.csv',
+            mime='text/csv'
+        )
     st.stop()
 
 # Save progress after each change
